@@ -16,3 +16,8 @@ Implementation of the WaveNet(2016) paper by DeepMind to model character sequenc
 --
 
 **Part 3: Update Part 2 with residual connections and skip connection.**
+
+--
+
+**NOTE: This repo is maintained individual to avoid cramming all the code witihn the nn_zero_to_hero repository. Link to which is:**
+    - [nn_zero_to_hero repository](https://github.com/sganesa2/nn_zero_to_hero)
