@@ -5,7 +5,7 @@ from itertools import chain
 from model.layers import (
     NgramEmbeddingTable, Linear, BatchNorm1d, Flatten, RUN_TYPE
 )
-from model.blocks import Sequential, NaiveDilatedConvolution
+from model.blocks import Sequential, SimpleDilatedConvolution
 
 class Wavenet:
     """
@@ -23,7 +23,7 @@ class Wavenet:
         self.embedding_table = NgramEmbeddingTable(self.vocab_size, feature_dims)
         self.sequential_layer1 = Sequential(
             self.embedding_table,
-            *chain.from_iterable(NaiveDilatedConvolution.recursive_convolution_init(
+            *chain.from_iterable(SimpleDilatedConvolution.recursive_convolution_init(
                 n,dilation_factor,h,feature_dims
             )),
             Linear(h, self.vocab_size)

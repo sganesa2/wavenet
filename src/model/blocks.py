@@ -52,7 +52,7 @@ class Sequential(Module):
         self._modules[idx] = module
 
 
-class NaiveDilatedConvolution(Module):
+class SimpleDilatedConvolution(Module):
     def __init__(self, dilation_factor:int, h:int, feature_dims:int)->None:
         """
         Building block of wavenet that is composed of:
@@ -82,9 +82,9 @@ class NaiveDilatedConvolution(Module):
         return self.dilated_convolution_block.params
     
     @classmethod
-    def recursive_convolution_init(cls, n:int, dilation_factor:int, h:int, feature_dims:int)->Iterator['NaiveDilatedConvolution']:
+    def recursive_convolution_init(cls, n:int, dilation_factor:int, h:int, feature_dims:int)->Iterator['SimpleDilatedConvolution']:
         convolutions = []
-        def _recursive_int(n:int)->'NaiveDilatedConvolution':
+        def _recursive_int(n:int)->'SimpleDilatedConvolution':
             if n==1: return
             nonlocal convolutions, dilation_factor, h, feature_dims
             convolutions.append(
