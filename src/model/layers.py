@@ -83,7 +83,8 @@ class BatchNorm1d(Module):
         if self.optim_type!=OPTIMIZATION_TYPE.MINIBATCH_GD: return
 
         if self.run_type==RUN_TYPE.TRAIN:
-            bn_mean, bn_std = x.mean(0, keepdim=True), x.std(0, keepdim=True) + self.epsilon
+            dim = (0,1) if x.ndim==3 else 0
+            bn_mean, bn_std = x.mean(dim, keepdim=True), x.std((0,1), keepdim=True) + self.epsilon
             with torch.no_grad():
                 self.running_mean = (1-self.momentum)*self.running_mean + self.momentum*bn_mean
                 self.running_std = (1-self.momentum)*self.running_std + self.momentum*bn_std
