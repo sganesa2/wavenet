@@ -23,7 +23,7 @@ class Linear(Module):
         self.W = torch.randn((fan_in,fan_out), generator=self.generator)
         self.b = torch.zeros(fan_out) if bias else None
     
-    def with_kaiming_init(self, nonlinearity:Literal['tanh', 'relu', 'leaky_relu'], neg_slope:Optional[float])->Self:
+    def with_kaiming_init(self, nonlinearity:Literal['tanh', 'relu', 'leaky_relu'], neg_slope:Optional[float] = 0)->Self:
         gain = {
             "tanh":5/3,
             "relu":2**0.5,
@@ -112,6 +112,14 @@ class NgramEmbeddingTable(Module):
     @property
     def params(self)->Iterator[torch.Tensor]:
         return iter([self.C])
+    
+class Flatten(Module):
+    def __call__(self, x:torch.Tensor)->torch.Tensor:
+        return x.view(x.shape[0], -1)
+    
+    @property
+    def params(self)->Iterator[torch.Tensor]:
+        return iter([])
     
 class FlattenConsecutive(Module):
     def __init__(self, n:int)->None:
